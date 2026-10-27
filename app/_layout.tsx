@@ -4,7 +4,7 @@ import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 
 export default function RootLayout() {
-  const [loadedFonts] = useFonts({
+  const [loadedFonts, fontError] = useFonts({
     "sans-bold": require('../assets/fonts/PlusJakartaSans-Bold.ttf'),
     "sans-extrabold": require('../assets/fonts/PlusJakartaSans-ExtraBold.ttf'),
     "sans-light": require('../assets/fonts/PlusJakartaSans-Light.ttf'),
@@ -14,12 +14,12 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    if (loadedFonts) {
+    if (loadedFonts || fontError) {
       SplashScreen.hideAsync();
     }
-  }, [loadedFonts]);
+  }, [loadedFonts, fontError]);
 
-  if (!loadedFonts) {
+  if (!loadedFonts && !fontError) {
     return null;
   }
 
