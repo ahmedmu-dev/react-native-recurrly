@@ -22,11 +22,11 @@ export default function App() {
         Go to Sign Up
       </Link>
 
-      <Link href='/(tabs)/subscriptions/spotify'>
+      <Link href='/subscriptions/spotify'>
         Spotify Subscription Details
       </Link>
 
-      <Link href={{ pathname: '/(tabs)/subscriptions/[id]', params: { id: 'claude' } }}>
+      <Link href={{ pathname: '/subscriptions/[id]', params: { id: 'claude' } }}>
         Calude Subscription Details
       </Link>
     </SafeAreaView>
