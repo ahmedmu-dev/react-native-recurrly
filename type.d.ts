@@ -2,6 +2,8 @@ import type { ReactNode, Ref } from "react";
 import type { ImageSourcePropType, TextInput, TextInputProps } from "react-native";
 
 declare global {
+    type SubscriptionFrequency = "Monthly" | "Yearly";
+
     interface AppTab {
         name: string;
         title: string;
@@ -24,6 +26,7 @@ declare global {
         startDate?: string;
         price: number;
         currency?: string;
+        frequency?: SubscriptionFrequency;
         billing: string;
         renewalDate?: string;
         color?: string;
@@ -34,6 +37,12 @@ declare global {
         onPress: () => void;
         onCancelPress?: () => void;
         isCancelling?: boolean;
+    }
+
+    interface CreateSubscriptionModalProps {
+        visible: boolean;
+        onClose: () => void;
+        onCreate: (subscription: Subscription) => void;
     }
 
     interface UpcomingSubscription {

@@ -1,5 +1,7 @@
 import { colors } from "@/constants/theme";
 import { getDisplayName } from "@/lib/auth";
+import { posthog } from "@/lib/posthog";
+import { posthogLog } from "@/lib/posthog-logs";
 import { useAuth, useUser } from "@clerk/expo";
 import { styled } from "nativewind";
 import { useState } from "react";
@@ -20,6 +22,9 @@ const Settings = () => {
         try {
             // The tabs layout redirects to sign-in once the session ends.
             await signOut();
+            posthog?.capture("user_signed_out");
+            posthogLog.info("sign_out_completed");
+            posthog?.reset();
         } catch {
             setSigningOut(false);
             Alert.alert("Couldn't sign out", "Check your connection and try again.");

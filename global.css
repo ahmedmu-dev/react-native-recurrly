@@ -226,6 +226,10 @@
         @apply py-4 text-sm font-sans-medium text-black/60;
     }
 
+    .subs-search {
+        @apply mb-5 rounded-2xl border border-border bg-background px-4 py-4 text-base font-sans-medium text-primary;
+    }
+
     .auth-safe-area {
         @apply flex-1 bg-background;
     }

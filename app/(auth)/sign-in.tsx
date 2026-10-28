@@ -4,6 +4,8 @@ import AuthShell from "@/components/auth/AuthShell";
 import VerifyCodeForm from "@/components/auth/VerifyCodeForm";
 import { BRAND } from "@/constants/brand";
 import { getAuthErrorMessage, validateEmail } from "@/lib/auth";
+import { posthog } from "@/lib/posthog";
+import { posthogLog } from "@/lib/posthog-logs";
 import { useSignIn } from "@clerk/expo";
 import { Link, useRouter } from "expo-router";
 import { useRef, useState } from "react";
@@ -32,6 +34,18 @@ const SignIn = () => {
                     setFormError("Your account needs one more step before you can continue");
                     return;
                 }
+                if (!session?.user?.id) {
+                    setFormError("We couldn't finish signing you in. Please try again");
+                    return;
+                }
+
+                posthog?.identify(session.user.id, {
+                    $set: { email: email.trim() },
+                });
+                posthog?.capture("user_signed_in");
+                posthogLog.info("sign_in_completed", {
+                    authentication_method: step === "verify" ? "email_code" : "password",
+                });
                 router.replace("/");
             },
         });

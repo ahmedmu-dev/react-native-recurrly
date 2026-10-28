@@ -4,6 +4,9 @@ import "@/global.css";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
+import { PostHogProvider } from "posthog-react-native";
+import { posthog } from "@/lib/posthog";
+import { SubscriptionsProvider } from "@/lib/subscriptions";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY ?? "";
 
@@ -31,9 +34,19 @@ export default function RootLayout() {
     return null;
   }
 
+  const navigator = (
+    <SubscriptionsProvider>
+      <Stack screenOptions={{ headerShown: false }} />
+    </SubscriptionsProvider>
+  );
+
   return (
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-      <Stack screenOptions={{ headerShown: false }} />
+      {posthog ? (
+        <PostHogProvider client={posthog}>{navigator}</PostHogProvider>
+      ) : (
+        navigator
+      )}
     </ClerkProvider>
   );
 }
