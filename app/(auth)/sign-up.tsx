@@ -3,6 +3,7 @@ import AuthField from "@/components/auth/AuthField";
 import AuthShell from "@/components/auth/AuthShell";
 import VerifyCodeForm from "@/components/auth/VerifyCodeForm";
 import { getAuthErrorMessage, PASSWORD_MIN_LENGTH, validateEmail, validatePassword } from "@/lib/auth";
+import { posthog } from "@/lib/posthog";
 import { useSignUp } from "@clerk/expo";
 import { Link, useRouter } from "expo-router";
 import { useRef, useState } from "react";
@@ -63,6 +64,15 @@ const SignUp = () => {
                     setFormError("Your account needs one more step before you can continue");
                     return;
                 }
+                if (!session?.user?.id) {
+                    setFormError("We couldn't finish creating your account. Please try again");
+                    return;
+                }
+
+                posthog?.identify(session.user.id, {
+                    $set: { email: email.trim() },
+                });
+                posthog?.capture("user_signed_up");
                 router.replace("/");
             },
         });
