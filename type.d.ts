@@ -1,4 +1,5 @@
-import type { ImageSourcePropType } from "react-native";
+import type { ReactNode, Ref } from "react";
+import type { ImageSourcePropType, TextInput, TextInputProps } from "react-native";
 
 declare global {
     interface AppTab {
@@ -49,6 +50,39 @@ declare global {
 
     interface ListHeadingProps {
         title: string;
+    }
+
+    interface AuthShellProps {
+        title: string;
+        subtitle: string;
+        children: ReactNode;
+        footer?: ReactNode;
+    }
+
+    interface AuthFieldProps extends TextInputProps {
+        label: string;
+        error?: string | null;
+        helper?: string;
+        secureToggle?: boolean;
+        ref?: Ref<TextInput>;
+    }
+
+    interface AuthButtonProps {
+        label: string;
+        onPress: () => void;
+        loading?: boolean;
+        disabled?: boolean;
+    }
+
+    interface VerifyCodeFormProps {
+        email: string;
+        loading: boolean;
+        formError: string | null;
+        submitLabel: string;
+        backLabel: string;
+        onSubmit: (code: string) => void;
+        onResend: () => Promise<void>;
+        onBack: () => void;
     }
 }
 

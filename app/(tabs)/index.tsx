@@ -1,11 +1,12 @@
 import ListHeading from "@/components/ListHeading";
 import SubscriptionCard from "@/components/SubscriptionCard";
 import UpcomingSubscriptionCard from "@/components/UpcomingSubscriptionCard";
-import { HOME_BALANCE, HOME_SUBSCRIPTIONS, HOME_USER, UPCOMING_SUBSCRIPTIONS } from "@/constants/data";
+import { HOME_BALANCE, HOME_SUBSCRIPTIONS, UPCOMING_SUBSCRIPTIONS } from "@/constants/data";
 import { icons } from "@/constants/icons";
-import images from "@/constants/images";
 import "@/global.css";
+import { getDisplayName } from "@/lib/auth";
 import { formatCurrency } from "@/lib/utils";
+import { useUser } from "@clerk/expo";
 import dayjs from "dayjs";
 
 import { styled } from "nativewind";
@@ -16,6 +17,8 @@ const SafeAreaView = styled(RNSafeAreaView);
 
 export default function App() {
   const [expandedSupscriptionId, setExpandedSupscriptionId] = useState<string | null>(null);
+  const { user } = useUser();
+  const displayName = getDisplayName(user);
 
   return (
     <SafeAreaView className="flex-1 bg-background p-5">
@@ -24,8 +27,10 @@ export default function App() {
           <>
             <View className="home-header">
               <View className="home-user">
-                <Image source={images.avatar} className="home-avatar" />
-                <Text className="home-user-name">{HOME_USER.name}</Text>
+                {user?.imageUrl
+                  ? <Image source={{ uri: user.imageUrl }} className="home-avatar" accessibilityLabel={`${displayName}'s profile photo`} />
+                  : <View className="home-avatar bg-muted" />}
+                <Text className="home-user-name" numberOfLines={1}>{displayName}</Text>
               </View>
 
               <Image source={icons.add} className="home-add-icon" />
