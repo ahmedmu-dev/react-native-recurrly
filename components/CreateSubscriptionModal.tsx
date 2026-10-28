@@ -1,6 +1,7 @@
 import AuthButton from '@/components/auth/AuthButton'
 import AuthField from '@/components/auth/AuthField'
 import { icons } from '@/constants/icons'
+import { posthog } from '@/lib/posthog'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import React, { useState } from 'react'
@@ -63,6 +64,14 @@ const CreateSubscriptionModal = ({ visible, onClose, onCreate }: CreateSubscript
             renewalDate: now.add(1, frequency === 'Monthly' ? 'month' : 'year').toISOString(),
             icon: icons.wallet,
             color: CATEGORY_COLORS[category],
+        });
+
+        posthog?.capture("subscription_created", {
+            subscription_id: `${slugify(name) || 'subscription'}-${Date.now()}`,
+            subscription_name: name.trim(),
+            subscription_price: parsedPrice,
+            subscription_frequency: frequency,
+            category: category ?? "Other",
         });
 
         resetForm();

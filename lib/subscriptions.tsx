@@ -1,4 +1,5 @@
 import { HOME_SUBSCRIPTIONS } from '@/constants/data';
+import { useAuth } from '@clerk/expo';
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
 
 interface SubscriptionsContextValue {
@@ -9,7 +10,15 @@ interface SubscriptionsContextValue {
 const SubscriptionsContext = createContext<SubscriptionsContextValue | null>(null);
 
 export const SubscriptionsProvider = ({ children }: { children: ReactNode }) => {
+    const { userId } = useAuth();
     const [subscriptions, setSubscriptions] = useState<Subscription[]>(HOME_SUBSCRIPTIONS);
+    const [ownerId, setOwnerId] = useState(userId);
+
+    // Start each account with fresh state; reset during render instead of remounting so the navigator isn't torn down
+    if (ownerId !== userId) {
+        setOwnerId(userId);
+        setSubscriptions(HOME_SUBSCRIPTIONS);
+    }
 
     const addSubscription = useCallback((subscription: Subscription) => {
         setSubscriptions((current) => [subscription, ...current]);

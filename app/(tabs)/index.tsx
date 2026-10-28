@@ -28,16 +28,6 @@ export default function App() {
 
   const handleCreateSubscription = (subscription: Subscription) => {
     addSubscription(subscription);
-    posthog?.capture("subscription_created", {
-      subscription_id: subscription.id,
-      category: subscription.category ?? "Other",
-      billing: subscription.billing,
-    });
-    posthogLog.info("subscription_created", {
-      subscription_id: subscription.id,
-      category: subscription.category ?? "Other",
-      billing: subscription.billing,
-    });
   };
 
   return (
