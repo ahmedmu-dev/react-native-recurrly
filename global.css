@@ -67,7 +67,7 @@
     }
 
     .home-user {
-        @apply flex-row items-center;
+        @apply mr-3 min-w-0 flex-1 flex-row items-center;
     }
 
     .home-avatar {
@@ -75,7 +75,7 @@
     }
 
     .home-user-name {
-        @apply ml-4 text-2xl font-sans-bold text-primary;
+        @apply ml-4 shrink text-2xl font-sans-bold text-primary;
     }
 
     .home-add-icon {
@@ -251,7 +251,7 @@
     }
 
     .auth-logo-mark {
-        @apply relative size-14 items-center justify-center rounded-2xl bg-accent;
+        @apply relative size-14 items-center justify-center rounded-bl-2xl rounded-tr-3xl bg-accent;
     }
 
     .auth-logo-mark-text {
@@ -348,6 +348,42 @@
 
     .auth-link {
         @apply text-sm font-sans-bold text-accent;
+    }
+
+    .settings-title {
+        @apply mb-6 text-3xl font-sans-bold text-primary;
+    }
+
+    .settings-card {
+        @apply flex-row items-center gap-4 rounded-3xl border border-border bg-card p-5;
+    }
+
+    .settings-avatar {
+        @apply size-16 rounded-full bg-muted;
+    }
+
+    .settings-profile-copy {
+        @apply min-w-0 flex-1;
+    }
+
+    .settings-name {
+        @apply text-xl font-sans-bold text-primary;
+    }
+
+    .settings-email {
+        @apply mt-1 text-sm font-sans-medium text-muted-foreground;
+    }
+
+    .settings-section-label {
+        @apply mb-3 mt-8 text-xs font-sans-semibold uppercase tracking-[1px] text-muted-foreground;
+    }
+
+    .settings-signout {
+        @apply items-center rounded-2xl border border-destructive/30 bg-destructive/10 py-4;
+    }
+
+    .settings-signout-text {
+        @apply text-base font-sans-bold text-destructive;
     }
 
     .modal-overlay {
