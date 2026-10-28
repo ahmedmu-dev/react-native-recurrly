@@ -111,7 +111,7 @@ const SignIn = () => {
                     onSubmit={handleVerify}
                     onResend={async () => {
                         setFormError(null);
-                        await sendEmailCode();
+                        return sendEmailCode();
                     }}
                     onBack={handleUseDifferentAccount}
                 />

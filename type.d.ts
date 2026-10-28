@@ -81,7 +81,7 @@ declare global {
         submitLabel: string;
         backLabel: string;
         onSubmit: (code: string) => void;
-        onResend: () => Promise<void>;
+        onResend: () => Promise<boolean>;
         onBack: () => void;
     }
 }

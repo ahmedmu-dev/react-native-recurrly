@@ -86,7 +86,7 @@ const SignUp = () => {
                     onSubmit={handleVerify}
                     onResend={async () => {
                         setFormError(null);
-                        await sendEmailCode();
+                        return sendEmailCode();
                     }}
                     onBack={handleChangeEmail}
                 />

@@ -25,10 +25,10 @@ const VerifyCodeForm = ({ email, loading, formError, submitLabel, backLabel, onS
 
     const handleResend = async () => {
         if (cooldown > 0 || loading) return;
+        if (!(await onResend())) return;
         setCode('');
         setShowErrors(false);
         setCooldown(RESEND_COOLDOWN_SECONDS);
-        await onResend();
     };
 
     return (
